@@ -4,6 +4,10 @@
 #include <utility>
 #include <vector>
 
+
+const std::string MATRICES_MULTIPLYING_ERROR = 
+    "The width of the 1st matrix must be equal to the height of the 2nd matrix!";
+
 template <typename T>
 class Matrix{
  private:
@@ -69,6 +73,10 @@ class Matrix{
     }
 
     Matrix<T>& operator*=(const Matrix<T>& rhs) {
+        Matrix<T> result;
+        if (width_ != rhs.height_) {
+            throw std::invalid_argument(MATRICES_MULTIPLYING_ERROR);
+        }
     }
 
     Matrix<T> operator*(const Matrix<T>& rhs) const {
