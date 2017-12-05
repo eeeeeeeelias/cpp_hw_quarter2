@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -77,10 +78,11 @@ class Matrix{
             throw std::invalid_argument(MATRICES_MULTIPLYING_ERROR);
         }
         std::vector<std::vector<T>> result(height_, std::vector<T>(rhs.width_, 0));
+        auto rhsT = rhs.transposed();
         for (size_t y = 0; y < height_; ++y) {
             for (size_t x = 0; x < rhs.width_; ++x) {
                 for (size_t i = 0; i < width_; ++i) {
-                    result[y][x] += matrix_[y][i] * rhs.matrix_[i][x];
+                    result[y][x] += matrix_[y][i] * rhsT.matrix_[x][i];
                 }
             }
         }
@@ -163,6 +165,7 @@ void ReadVector(std::vector<std::vector<T>>& v) {
     }
 }
 
+/*
 int main() {
     freopen("matrix.in", "rt", stdin);
     freopen("matrix.out", "wt", stdout);
@@ -174,4 +177,5 @@ int main() {
     m1 *= m2;
     std::cout << m1 << '\n';
 }
+*/
 
