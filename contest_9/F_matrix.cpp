@@ -5,7 +5,7 @@
 #include <vector>
 
 
-const std::string MATRICES_MULTIPLYING_ERROR = 
+const std::string MATRICES_MULTIPLYING_ERROR =
     "The width of the 1st matrix must be equal to the height of the 2nd matrix!";
 
 template <typename T>
@@ -73,10 +73,19 @@ class Matrix{
     }
 
     Matrix<T>& operator*=(const Matrix<T>& rhs) {
-        Matrix<T> result;
         if (width_ != rhs.height_) {
             throw std::invalid_argument(MATRICES_MULTIPLYING_ERROR);
         }
+        std::vector<std::vector<T>> result(height_, std::vector<T>(rhs.width_, 0));
+        for (size_t y = 0; y < height_; ++y) {
+            for (size_t x = 0; x < rhs.width_; ++x) {
+                for (size_t i = 0; i < width_; ++i) {
+                    result[y][x] += matrix_[y][i] * rhs.matrix_[i][x];
+                }
+            }
+        }
+        *this = Matrix(result);
+        return *this;
     }
 
     Matrix<T> operator*(const Matrix<T>& rhs) const {
@@ -154,21 +163,15 @@ void ReadVector(std::vector<std::vector<T>>& v) {
     }
 }
 
-/*
 int main() {
     freopen("matrix.in", "rt", stdin);
     freopen("matrix.out", "wt", stdout);
     std::vector<std::vector<int>> x;
     ReadVector(x);
     Matrix<int> m1(x);
-    std::cout << m1 << '\n' << '\n';
-    m1.transpose();
-    std::cout << m1 << "\n\n";
-    m1.transpose();
-    std::cout << m1 << "\n\n";
-    std::cout << m1.transposed() << '\n' << '\n';
-    std::cout << m1 << '\n' << '\n';
-    m1.transpose();
+    ReadVector(x);
+    Matrix<int> m2(x);
+    m1 *= m2;
     std::cout << m1 << '\n';
 }
-*/
+
