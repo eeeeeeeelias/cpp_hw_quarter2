@@ -1,0 +1,31 @@
+#include <algorithm>
+#include <iostream>
+#include <stack>
+#include <unordered_set>
+#include <unordered_map>
+#include <string>
+
+bool IsSequenceTrue(std::string& line) {
+    std::stack<char> sequence;
+    std::unordered_set<char> open {'{', '(', '['};
+    std::unordered_map<char, char> openClose {{'{', '}'}, {'(', ')'}, {'[', ']'}};
+    for (auto elem : line) {
+        if (open.find(elem) == open.end()) {
+            sequence.push(elem);
+        } else {
+            if (elem != openClose[sequence.top()]) {
+                return false;
+            } else {
+                sequence.pop();
+            }
+        }
+    }
+    return true;
+}
+
+
+int main() {
+    std::string sequence;
+    std::cin >> sequence;
+    std::cout << (IsSequenceTrue(sequence) ? "yes" : "no") << '\n';
+}
