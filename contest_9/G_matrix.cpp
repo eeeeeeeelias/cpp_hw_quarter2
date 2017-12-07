@@ -45,8 +45,7 @@ class Matrix{
     }
 
     typename std::vector<T>::const_iterator begin() const {
-        auto tmp = matrix_.begin();
-        return tmp;
+        return matrix_.begin();
     }
 
     typename std::vector<T>::iterator end() {
@@ -54,93 +53,8 @@ class Matrix{
     }
 
     typename std::vector<T>::const_iterator end() const {
-        auto tmp = matrix_.end();
-        return tmp;
+        return matrix_.end();
     }
-/*
-    Matrix<T>& operator+=(const Matrix<T>& rhs) {
-        for (size_t y = 0; y < height_; ++y) {
-            for (size_t x = 0; x < width_; ++x) {
-                matrix_[y][x] += rhs.matrix_[y][x];
-            }
-        }
-        return *this;
-    }
-
-    Matrix<T> operator+(const Matrix<T>& rhs) const {
-        return Matrix(*this) += rhs;
-    }
-
-    template <typename Number>
-    Matrix<T>& operator*=(const Number& scalar) {
-        for (size_t y = 0; y < height_; ++y) {
-            for (size_t x = 0; x < width_; ++x) {
-                matrix_[y][x] *= scalar;
-            }
-        }
-        return *this;
-    }
-
-    template <typename Number>
-    Matrix<T> operator*(const Number& scalar) const {
-        return Matrix(*this) *= scalar;
-    }
-
-    Matrix<T>& operator*=(const Matrix<T>& rhs) {
-        if (width_ != rhs.height_) {
-            throw std::invalid_argument(MATRICES_MULTIPLYING_ERROR);
-        }
-        std::vector<std::vector<T>> result(height_, std::vector<T>(rhs.width_, 0));
-        auto rhsT = rhs.transposed();
-        for (size_t y = 0; y < height_; ++y) {
-            for (size_t x = 0; x < rhs.width_; ++x) {
-                for (size_t i = 0; i < width_; ++i) {
-                    result[y][x] += matrix_[y][i] * rhsT.matrix_[x][i];
-                }
-            }
-        }
-        *this = Matrix(result);
-        return *this;
-    }
-
-    Matrix<T> operator*(const Matrix<T>& rhs) const {
-        return Matrix<T>(*this) *= rhs;
-    }
-
-    Matrix<T>& transpose() {
-        if (height_ >= width_) {
-            for (size_t y = 0; y < width_; ++y) {
-                matrix_[y].resize(height_);
-                for (size_t x = y + 1; x < height_; ++x) {
-                    std::swap(matrix_[y][x], matrix_[x][y]);
-                }
-            }
-            matrix_.resize(width_);
-        } else {
-            matrix_.resize(width_);
-            for (size_t y = 0; y < height_; ++y) {
-                for (size_t x = 0; x < y; ++x) {
-                    std::swap(matrix_[y][x], matrix_[x][y]);
-                }
-            }
-            for (size_t y = height_; y < width_; ++y) {
-                matrix_[y].resize(height_);
-                for (size_t x = 0; x < height_; ++x) {
-                    matrix_[y][x] = matrix_[x][y];
-                }
-            }
-            for (size_t y = 0; y < height_; ++y) {
-                matrix_[y].resize(height_);
-            }
-        }
-        std::swap(height_, width_);
-        return *this;
-    }
-
-    Matrix<T> transposed() const {
-        return Matrix(*this).transpose();
-    }
-*/
 };
 
 template <typename T>
